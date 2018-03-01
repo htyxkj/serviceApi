@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="hello-user"/>
+
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+    <dubbo:protocol name="rest" port="9000" accepts="500"/>
+
+    <dubbo:service protocol="rest" filter="abc" interface="com.iflytek.interfaces.ICulturalWebRest"
+    ref="ICulturalWebRest"/>
+
+    <dubbo:protocol name="webservice" port="8084" accepts="500" server="servlet"/>
+
+    <dubbo:service protocol="webservice" filter="abc" interface="com.iflytek.interfaces.ICulturalWebServices"
+                   ref="ICulturalWebServices"/>
+
+    <bean id="ICulturalWebRest" class="com.service.interfaces.impl.CulturalWebRestImpl"/>
+    <bean id="ICulturalWebServices" class="com.service.interfaces.impl.CulturalWebServicesImpl"/>
+</beans>
